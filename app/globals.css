@@ -24,6 +24,8 @@
 }
 
 :root {
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-playfair: 'Playfair Display', serif;
   --bg: #F7F4EE;
   --bg2: #EFEBE1;
   --card: #FFFFFF;
