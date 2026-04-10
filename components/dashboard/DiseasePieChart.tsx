@@ -181,14 +181,17 @@ export function DiseasePieChart({ data }: DiseasePieChartProps) {
               ))}
             </Pie>
             <Tooltip
-              content={({ payload }: { payload?: Array<{ payload: DiseaseData }> }) => {
-                if (!payload || !payload.length) return null;
-                const d = payload[0].payload as DiseaseData;
-                const pct = totalScans > 0 ? ((d.count / totalScans) * 100).toFixed(1) : "0";
+              content={({ active, payload }: any) => {
+                if (!active || !payload || !payload.length) return null;
+                const d = payload[0].payload;
+                const pct =
+                  totalScans > 0 ? ((d.count / totalScans) * 100).toFixed(1) : "0";
                 return (
-                  <div className="bg-[var(--ink)] text-white text-[12px] px-3 py-2 rounded-lg shadow-lg">
+                  <div className="bg-[var(--ink)] text-white text-[12px] px-3 py-2 rounded-lg shadow-lg border-none outline-none">
                     <p className="font-semibold">{d.name}</p>
-                    <p>{d.count} scans · {pct}%</p>
+                    <p>
+                      {d.count} scans · {pct}%
+                    </p>
                   </div>
                 );
               }}
