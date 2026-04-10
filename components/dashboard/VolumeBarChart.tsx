@@ -109,12 +109,12 @@ export function VolumeBarChart({ data }: VolumeBarChartProps) {
               tickFormatter={(v: number) => `${v}%`}
             />
 
-            <Tooltip
-              content={({ active, payload, label }: { active?: boolean; payload?: Array<{ payload: DailyData }>; label?: string }) => {
+             <Tooltip
+              content={({ active, payload, label }: any) => {
                 if (!active || !payload || !payload.length) return null;
-                const d = payload[0]?.payload as DailyData;
+                const d = payload[0]?.payload;
                 return (
-                  <div className="bg-[var(--ink)] text-white text-[12px] px-4 py-3 rounded-xl shadow-xl">
+                  <div className="bg-[var(--ink)] text-white text-[12px] px-4 py-3 rounded-xl shadow-xl border-none outline-none">
                     <p className="font-semibold text-[13px] mb-1.5">{formatDate(label ?? "")}</p>
                     <div className="flex flex-col gap-1">
                       <p className="flex items-center gap-2">
