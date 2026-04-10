@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F7F4EE;
+  --color-bg2: #EFEBE1;
+  --color-card: #FFFFFF;
+  --color-ink: #1C1A14;
+  --color-ink2: #5A5548;
+  --color-ink3: #9A9186;
+  --color-leaf: #3A6B1E;
+  --color-leaf-light: #EAF3DE;
+  --color-leaf-mid: #639922;
+  --color-amber: #BA7517;
+  --color-amber-light: #FAEEDA;
+  --color-red: #A32D2D;
+  --color-red-light: #FCEBEB;
+  --color-teal: #0F6E56;
+  --color-teal-light: #E1F5EE;
+  --color-border: rgba(60,50,30,0.12);
+  --color-border-strong: rgba(60,50,30,0.22);
+  
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+:root {
+  --bg: #F7F4EE;
+  --bg2: #EFEBE1;
+  --card: #FFFFFF;
+  --ink: #1C1A14;
+  --ink2: #5A5548;
+  --ink3: #9A9186;
+  --leaf: #3A6B1E;
+  --leaf-light: #EAF3DE;
+  --leaf-mid: #639922;
+  --amber: #BA7517;
+  --amber-light: #FAEEDA;
+  --red: #A32D2D;
+  --red-light: #FCEBEB;
+  --teal: #0F6E56;
+  --teal-light: #E1F5EE;
+  --border: rgba(60,50,30,0.12);
+  --border-strong: rgba(60,50,30,0.22);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 2px 16px rgba(30,25,10,0.08);
+  --shadow-md: 0 6px 32px rgba(30,25,10,0.12);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tailwind v4 Preflight already handles box-sizing, margin, and padding resets.
+   Do NOT add unlayered * { padding: 0 } etc. — it overrides all Tailwind utilities
+   because unlayered CSS beats @layer styles in the cascade. */
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+}

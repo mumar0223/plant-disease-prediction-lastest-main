@@ -1,0 +1,37 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Every image diagnosis — whether classified by the HF model or overridden
+/// by the AI fallback — gets exactly ONE row with the FINAL verdict.
+model Prediction {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  /// true = the system's final answer was "this is a plant"
+  isPlant    Boolean
+  /// The disease label chosen by whichever system had the last word.
+  /// null when isPlant is false.
+  disease    String?
+  /// Confidence score (0–100) from the decisive system.
+  confidence Float    @default(0)
+
+  /// Which system produced the final classification:
+  ///   HF_MODEL    — Hugging Face model was accepted as-is
+  ///   AI_FALLBACK — AI (Gemini/OpenRouter) overrode or supplemented HF
+  source     String   @default("HF_MODEL")
+
+  /// The witty comment returned when the image is not a plant (nullable).
+  comment    String?
+
+  @@index([createdAt])
+  @@index([isPlant])
+  @@index([disease])
+}
