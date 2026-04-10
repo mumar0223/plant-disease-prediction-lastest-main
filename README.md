@@ -1,3 +1,5 @@
+# 🚀 **Live Project Link → [plant-disease-prediction-lastest-ma.vercel.app](https://plant-disease-prediction-lastest-ma.vercel.app/)**
+
 # 🌿 AgroVision — Data-Driven Crop Disease Detection & Smart Analysis
 
 > **Innovate Bharat Hackathon 2026** · Track: Data Science & Smart Analysis (DSSA) · Team: GreenVision · ID: DSSA111
