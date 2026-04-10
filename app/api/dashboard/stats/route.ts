@@ -23,19 +23,20 @@ export async function GET() {
 
     /* ── Average confidence ─────────────────────────────────── */
     const avgResult = await prisma.prediction.aggregate({
+      where: { isPlant: true },
       _avg: { confidence: true },
     });
     const rawAvg = avgResult._avg.confidence ?? 0;
 
     // Weighted accuracy: blend 97.5% baseline with real data
-    // As real samples grow, the baseline's influence shrinks
+    // As real plant samples grow, the baseline's influence shrinks
     const BASELINE = 97.5;
     const BASELINE_WEIGHT = 10; // acts like 10 virtual samples at 97.5%
     const weightedAccuracy =
-      totalPredictions === 0
+      plantCount === 0
         ? BASELINE
-        : (BASELINE * BASELINE_WEIGHT + rawAvg * totalPredictions) /
-          (BASELINE_WEIGHT + totalPredictions);
+        : (BASELINE * BASELINE_WEIGHT + rawAvg * plantCount) /
+          (BASELINE_WEIGHT + plantCount);
 
     /* ── Top disease ────────────────────────────────────────── */
     const diseaseGroups = await prisma.prediction.groupBy({
@@ -84,9 +85,12 @@ export async function GET() {
         sumConf: 0,
       };
       bucket.total += 1;
-      if (p.isPlant) bucket.plant += 1;
-      else bucket.nonPlant += 1;
-      bucket.sumConf += p.confidence;
+      if (p.isPlant) {
+        bucket.plant += 1;
+        bucket.sumConf += p.confidence;
+      } else {
+        bucket.nonPlant += 1;
+      }
       dailyMap.set(dateKey, bucket);
     }
 
@@ -109,8 +113,8 @@ export async function GET() {
         plant: bucket?.plant ?? 0,
         nonPlant: bucket?.nonPlant ?? 0,
         avgConfidence:
-          bucket && bucket.total > 0
-            ? Math.round((bucket.sumConf / bucket.total) * 100) / 100
+          bucket && bucket.plant > 0
+            ? Math.round((bucket.sumConf / bucket.plant) * 100) / 100
             : 0,
       });
       cursor.setDate(cursor.getDate() + 1);
